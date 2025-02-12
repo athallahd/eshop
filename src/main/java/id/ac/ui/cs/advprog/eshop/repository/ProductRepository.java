@@ -28,6 +28,14 @@ public class ProductRepository {
         return editedProduct;
     }
 
+    public Product delete(String productId){
+        Product deletedProduct = findById(productId);
+        if (deletedProduct != null) {
+            productData.remove(deletedProduct);
+        }
+        return deletedProduct;
+    }
+
     public Iterator<Product> findAll(){
         return productData.iterator();
     }
