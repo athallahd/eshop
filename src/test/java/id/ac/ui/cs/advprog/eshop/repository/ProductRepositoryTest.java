@@ -100,6 +100,46 @@ class ProductRepositoryTest {
     }
 
     @Test
+    public void testFindById_ProductExists() {
+        ProductRepository repository = new ProductRepository();
+        Product product = new Product();
+
+        repository.create(product);
+
+        String generatedId = product.getProductID(); // Ambil ID setelah create
+        System.out.println("Generated ID: " + generatedId); // Debugging
+
+        Product found = repository.findById(generatedId);
+
+        assertNotNull(found); // Sekarang harus tidak null
+        assertEquals(generatedId, found.getProductID()); // Pastikan ID cocok
+    }
+
+    @Test
+    public void testFindById_ProductNotExists() {
+        ProductRepository repository = new ProductRepository(); // Repository kosong
+
+        Product found = repository.findById("99999"); // ID yang tidak ada
+
+        assertNull(found); // Pastikan mengembalikan null
+    }
+
+    @Test
+    void testFindByIdOfTwoProducts() {
+        Product product1 = new Product();
+        product1.setProductName("Sampo Cap Bambang");
+        product1.setProductQuantity(100);
+        productRepository.create(product1);
+        Product product2 = new Product();
+        product2.setProductName("Sampo Cap Rudi");
+        product2.setProductQuantity(200);
+        productRepository.create(product2);
+
+        Product result = productRepository.findById(product2.getProductID());
+        assertEquals(product2.getProductID(), result.getProductID());
+    }
+
+    @Test
     void testFindAllIfEmpty() {
         Iterator<Product> productIterator = productRepository.findAll();
         assertFalse(productIterator.hasNext());
