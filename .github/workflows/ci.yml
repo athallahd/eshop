@@ -1,15 +1,16 @@
 name : Continuous Integration (CI)
 
+## Run CI jobs on all branches by default
 on:
   push:
     pull_request:
 
 jobs:
   test:
-    name: Run Tests
+    name: Run tests
     runs-on: ubuntu-22.04
     steps:
-      - name: Check Out the Git Repository
+      - name: Check Out the Git repository
         uses: actions/checkout@v4
       - name: Set up Java toolchain
         uses: actions/setup-java@v4
