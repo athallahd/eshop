@@ -24,7 +24,7 @@ class CarController {
 
     @PostMapping("/createCar")
     public String createCarPost(@ModelAttribute Car car, Model model){
-        carservice.create(car);
+        carService.create(car);
         return "redirect:listCar";
     }
 
