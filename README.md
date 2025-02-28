@@ -60,3 +60,33 @@ kondisi stabil tanpa perlu intervensi manual. Dengan sistem ini, pengembangan me
 serta memastikan kode yang dirilis selalu dalam kondisi optimal.
 
 </details>
+
+### Module 3
+<details>
+<summary><b>Reflection 1</b></summary>
+
+> Explain what principles you apply to your project!
+
+1). Apakah Anda sudah mengimplementasikan SRP?
+Sudah, sebelumnya CarController digabung dengan ProductController, namun sesuai dengan Single Responsibility Principle (SRP) yang mengharuskan setiap kelas memiliki satu tanggung jawab yang jelas, kini CarController dipisah dari ProductController dan tidak lagi mewarisi kelas ProductController. Hal ini membuat masing-masing kelas memiliki tanggung jawab yang lebih terdefinisi.
+
+2). Apakah Anda sudah mengimplementasikan OCP?
+Sudah, sebelumnya CarRepository langsung berisi implementasi konkret. Kini saya mengubah CarRepository menjadi sebuah interface, dan implementasinya akan mengikuti interface tersebut. Open/Closed Principle (OCP) memungkinkan kita untuk memperluas fungsionalitas tanpa mengubah perilaku yang sudah ada. Dengan menggunakan interface, jika kita ingin menambah fungsionalitas, kita bisa melakukannya dengan membuat kelas baru yang mengimplementasikan interface tersebut tanpa merubah implementasi lama.
+
+3). Apakah Anda sudah mengimplementasikan LSP?
+Sudah, sekarang CarRepositoryImpl mengimplementasikan CarRepository, dan struktur ini jelas tanpa membingungkan, karena semua fungsi yang di-extend dari CarRepository terdefinisi dengan baik. Liskov Substitution Principle (LSP) memastikan bahwa ketika kita membuat subclass atau subtype, perilaku subclass tersebut tidak boleh bertentangan dengan perilaku superclass yang ada.
+
+4). Apakah Anda sudah mengimplementasikan ISP?
+Sudah, dalam repository terdapat berbagai interface kecil yang hanya memiliki satu fungsi spesifik, seperti Create, Delete, dll. Interface-interface kecil ini diimplementasikan dalam interface yang lebih besar, seperti CarRepository. Ini memungkinkan kelas lain untuk mengimplementasikan hanya interface yang relevan. Interface Segregation Principle (ISP) menghindari penggunaan interface besar yang memaksa kelas untuk mengimplementasikan metode yang tidak diperlukan, dengan lebih baik menggunakan interface yang kecil dan terfokus.
+
+5). Apakah Anda sudah mengimplementasikan DIP?
+Sudah, sebelumnya di CarController, kelas tersebut langsung bergantung pada implementasi dari CarRepository. Sekarang saya mengubah CarRepository menjadi interface, sehingga CarController bergantung pada abstraksi (interface) dan bukan pada implementasi konkret. Dependency Inversion Principle (DIP) mengajarkan bahwa modul tingkat tinggi tidak boleh bergantung pada modul tingkat rendah, melainkan keduanya harus bergantung pada abstraksi, sehingga memperkuat fleksibilitas dan modularitas kode.
+
+> Explain the advantages of applying SOLID principles to your project with examples.
+
+Dengan menerapkan prinsip SOLID, aplikasi saya menjadi lebih mudah untuk dipelihara, diperluas, dan lebih fleksibel. Sebagai contoh, dengan mengimplementasikan SRP pada CarController, proses pengujian menjadi lebih mudah. Selain itu, dengan menerapkan OCP pada CarRepository, misalnya jika saya ingin menambahkan fitur baru seperti membuat repository khusus untuk mobil dengan engine yang berbeda-beda, saya dapat membuat implementasi baru tanpa perlu mengubah perilaku atau kode yang sudah ada, karena tetap mengikuti interface CarRepository.
+
+> Explain the disadvantages of not applying SOLID principles to your project with examples.
+
+Jika prinsip SOLID tidak diterapkan pada aplikasi, khususnya pada CarController, berbagai masalah bisa muncul. Misalnya, jika SRP (Single Responsibility Principle) tidak diterapkan, maka CarController bisa memiliki lebih dari satu tanggung jawab, seperti menangani logika bisnis, validasi, dan pengelolaan data mobil dalam satu kelas. Hal ini menyebabkan kelas menjadi terlalu besar, sulit untuk dipelihara, dan menghambat pengujian. Tanpa OCP (Open/Closed Principle), ketika fitur baru ingin ditambahkan, seperti membuat repository khusus untuk mobil matic atau manual, kita harus mengubah kode yang sudah ada, yang dapat merusak fungsionalitas yang sudah berjalan. Jika LSP (Liskov Substitution Principle) tidak diterapkan, subclass dari CarController bisa memiliki perilaku yang berbeda dan tidak dapat menggantikan CarController dengan aman, sehingga menyebabkan kebingungannya pengembangan dan pengujian. Tanpa ISP (Interface Segregation Principle), kita akan memaksa kelas untuk mengimplementasikan metode yang tidak diperlukan, seperti menyatukan berbagai fungsi dalam satu interface besar, yang membuat kode menjadi tidak fleksibel dan sulit untuk dikembangkan. Terakhir, tanpa DIP (Dependency Inversion Principle), jika CarController bergantung langsung pada implementasi konkret dari CarRepository, maka kita akan kesulitan saat ingin mengganti implementasi tersebut, karena kode akan bergantung erat pada detail implementasi yang spesifik, sehingga mempersulit pemeliharaan dan pengujian kode di masa depan.
+</details>
