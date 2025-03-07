@@ -44,7 +44,7 @@ class PaymentTest {
         assertEquals("13652556-012a-4c07-b546-54eb1396d34b", payment.getId());
         assertEquals(order, payment.getOrder());
         assertEquals("VOUCHER_CODE", payment.getMethod());
-        assertEquals(paymentData, paymentData.getPaymentData());
+        assertEquals(paymentDataVoucher, payment.getPaymentData());
         assertEquals("PENDING", payment.getStatus());
     }
 
@@ -101,7 +101,7 @@ class PaymentTest {
     }
 
     @Test
-    void testPaymentMethodBank(){
+    void testPaymentMethodVoucher(){
         Payment payment = new Payment("13652556-012a-4c07-b546-54eb1396d34b", order,
                 "VOUCHER_CODE", paymentDataVoucher);
         assertEquals("VOUCHER_CODE", payment.getMethod());
