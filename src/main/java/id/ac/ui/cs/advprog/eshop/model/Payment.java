@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.Map;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -18,12 +19,11 @@ public class Payment {
         if (order == null) {
             throw new IllegalArgumentException("Order cannot be null");
         }
-
         if (paymentData == null) {
             throw new IllegalArgumentException("Payment data cannot be null");
         }
 
-        this.id = id;
+        this.id = (id != null && !id.isEmpty()) ? id : UUID.randomUUID().toString();
         this.order = order;
         this.paymentData = paymentData;
         this.method = method;
