@@ -1,5 +1,6 @@
 package id.ac.ui.cs.advprog.eshop.model;
 
+import id.ac.ui.cs.advprog.eshop.enums.PaymentStatus;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
@@ -47,14 +48,14 @@ class PaymentTest {
         assertEquals(order, payment.getOrder());
         assertEquals("VOUCHER_CODE", payment.getMethod());
         assertEquals(paymentDataVoucher, payment.getPaymentData());
-        assertEquals("SUCCESS", payment.getStatus());
+        assertEquals(PaymentStatus.SUCCESS.getValue(), payment.getStatus());
     }
 
     @Test
     void testCreatePaymentSuccess(){
         Payment payment = new Payment("13652556-012a-4c07-b546-54eb1396d34b", order,
                 "VOUCHER_CODE", paymentDataVoucher);
-        assertEquals("SUCCESS", payment.getStatus());
+        assertEquals(PaymentStatus.SUCCESS.getValue(), payment.getStatus());
     }
 
     @Test
@@ -62,7 +63,7 @@ class PaymentTest {
         paymentDataVoucher.clear();
         Payment payment = new Payment("13652556-012a-4c07-b546-54eb1396d34b", order,
                 "VOUCHER_CODE", paymentDataVoucher);
-        assertEquals("REJECTED", payment.getStatus());
+        assertEquals(PaymentStatus.REJECTED.getValue(), payment.getStatus());
     }
 
     @Test
@@ -77,16 +78,16 @@ class PaymentTest {
     void testSetStatusToSuccess(){
         Payment payment = new Payment("13652556-012a-4c07-b546-54eb1396d34b", order,
                 "VOUCHER_CODE", paymentDataVoucher);
-        payment.setStatus("SUCCESS");
-        assertEquals("SUCCESS", payment.getStatus());
+        payment.setStatus(PaymentStatus.SUCCESS.getValue());
+        assertEquals(PaymentStatus.SUCCESS.getValue(), payment.getStatus());
     }
 
     @Test
     void testSetStatusToReject(){
         Payment payment = new Payment("13652556-012a-4c07-b546-54eb1396d34b", order,
                 "VOUCHER_CODE", paymentDataVoucher);
-        payment.setStatus("REJECTED");
-        assertEquals("REJECTED", payment.getStatus());
+        payment.setStatus(PaymentStatus.REJECTED.getValue());
+        assertEquals(PaymentStatus.REJECTED.getValue(), payment.getStatus());
     }
 
     @Test
@@ -116,7 +117,7 @@ class PaymentTest {
         paymentDataVoucher.put("voucherCode", "ESHOP1234ABC5678");
         Payment payment = new Payment("13652556-012a-4c07-b546-54eb1396d34b", order,
                 "VOUCHER_CODE", paymentDataVoucher);
-        assertEquals("SUCCESS", payment.getStatus());
+        assertEquals(PaymentStatus.SUCCESS.getValue(), payment.getStatus());
     }
 
     @Test
@@ -125,7 +126,7 @@ class PaymentTest {
         paymentDataVoucher.put("voucherCode", "awiwiwowiw234");
         Payment payment = new Payment("13652556-012a-4c07-b546-54eb1396d34b", order,
                 "VOUCHER_CODE", paymentDataVoucher);
-        assertEquals("REJECTED", payment.getStatus());
+        assertEquals(PaymentStatus.REJECTED.getValue(), payment.getStatus());
     }
 
     @Test
@@ -135,7 +136,7 @@ class PaymentTest {
         paymentDataBank.put("referenceCode", "666");
         Payment payment = new Payment("13652556-012a-4c07-b546-54eb1396d34b", order,
                 "BANK", paymentDataBank);
-        assertEquals("PENDING", payment.getStatus());
+        assertEquals(PaymentStatus.PENDING.getValue(), payment.getStatus());
     }
 
     @Test
@@ -145,6 +146,6 @@ class PaymentTest {
         paymentDataBank.put("referenceCode", "666");
         Payment payment = new Payment("13652556-012a-4c07-b546-54eb1396d34b", order,
                 "BANK", paymentDataBank);
-        assertEquals("REJECTED", payment.getStatus());
+        assertEquals(PaymentStatus.REJECTED.getValue(), payment.getStatus());
     }
 }

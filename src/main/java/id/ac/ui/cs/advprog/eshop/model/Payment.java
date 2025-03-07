@@ -1,5 +1,6 @@
 package id.ac.ui.cs.advprog.eshop.model;
 
+import id.ac.ui.cs.advprog.eshop.enums.PaymentStatus;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -15,8 +16,6 @@ public class Payment {
     private Order order;
     private String method;
     private Map<String,String> paymentData;
-
-    @Setter
     private String status;
 
     public Payment(String id, Order order, String method, Map<String, String> paymentData){
@@ -28,21 +27,14 @@ public class Payment {
     }
     public Payment(String id, Order order, String method, Map<String, String> paymentData, String status){
         this(id, order, method, paymentData);
-
-        String[] statusList = {"PENDING","SUCCESS", "REJECTED"};
-        if(Arrays.stream(statusList).noneMatch(item -> (item.equals(status)))){
-            throw new IllegalArgumentException();
-        }else{
-            this.status = status;
-        }
+        this.setStatus(status);
     }
 
     public void setStatus(String status){
-        String[] statusList = {"PENDING","SUCCESS", "REJECTED"};
-        if(Arrays.stream(statusList).noneMatch(item -> (item.equals(status)))){
-            throw new IllegalArgumentException();
-        }else{
+        if(PaymentStatus.contains(status)){
             this.status = status;
+        }else{
+            throw new IllegalArgumentException();
         }
     }
 
@@ -50,15 +42,15 @@ public class Payment {
         if (paymentMethod.equals("BANK")) {
             if (paymentData.get("bankName") == null || paymentData.get("referenceCode") == null || Objects.equals(paymentData.get("bankName"), "")
                     || Objects.equals(paymentData.get("referenceCode"), "")) {
-                this.status = "REJECTED";
+                this.status = PaymentStatus.REJECTED.getValue();
             }else{
-                this.status = "PENDING";
+                this.status = PaymentStatus.PENDING.getValue();
             }
         }else if (paymentMethod.equals("VOUCHER_CODE")) {
             String voucherCode = paymentData.get("voucherCode");
 
             if (voucherCode == null || voucherCode.length() != 16 || !voucherCode.startsWith("ESHOP")) {
-                this.status = "REJECTED";
+                this.status = PaymentStatus.REJECTED.getValue();
                 return;
             }
 
@@ -67,9 +59,9 @@ public class Payment {
                     .count();
 
             if (digitCount != 8) {
-                this.status = "REJECTED";
+                this.status = PaymentStatus.REJECTED.getValue();
             } else {
-                this.status = "SUCCESS";
+                this.status = PaymentStatus.SUCCESS.getValue();
             }
         }
     }
