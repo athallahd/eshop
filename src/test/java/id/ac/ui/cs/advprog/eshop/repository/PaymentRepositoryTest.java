@@ -20,6 +20,7 @@ public class PaymentRepositoryTest {
     @BeforeEach
     void setUp(){
         paymentRepository = new PaymentRepository();
+        payments = new ArrayList<>();
 
         List<Product> products = new ArrayList<>();
         Product product1 = new Product();
@@ -42,7 +43,7 @@ public class PaymentRepositoryTest {
 
         Payment payment1 = new Payment("13652556-012a-4c07-b546-54eb1396d34b", order1,
                 "VOUCHER_CODE", paymentDataVoucher);
-        Payment payment2 = new Payment("13652556-012a-4c07-b546-54eb1396d89a", order2,
+        Payment payment2 = new Payment("13652556-012a-4c07-b546-54eb1396d89a", order1,
                 "BANK", paymentDataBank);
 
         payments.add(payment1);
@@ -74,8 +75,8 @@ public class PaymentRepositoryTest {
 
         Payment newPayment = new Payment(payment.getId(), payment.getOrder(), "BANK", paymentDataNew);
         Payment result = paymentRepository.save(newPayment);
-
         Payment findResult = paymentRepository.findById(payments.getFirst().getId());
+
         assertEquals(newPayment.getId(), result.getId());
         assertEquals(newPayment.getId(), findResult.getId());
         assertEquals(newPayment.getMethod(), findResult.getMethod());
