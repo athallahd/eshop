@@ -1,6 +1,5 @@
 package id.ac.ui.cs.advprog.eshop.model;
 
-import id.ac.ui.cs.advprog.eshop.enums.OrderStatus;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
@@ -26,8 +25,11 @@ class PaymentTest {
         product2.setProductName("Sabun Cap Usep");
         product2.setProductQuantity(1);
 
+        this.products.add(product1);
+        this.products.add(product2);
+
         order = new Order("13652556-012a-4c07-b546-54eb1396d79b",
-                products, System.currentTimeMillis(), "usertest1", "WAITING_PAYMENT");
+                products, 1708560000L, "usertest1");
 
         paymentDataBank = new HashMap<>();
         paymentDataVoucher = new HashMap<>();
@@ -45,7 +47,7 @@ class PaymentTest {
         assertEquals(order, payment.getOrder());
         assertEquals("VOUCHER_CODE", payment.getMethod());
         assertEquals(paymentDataVoucher, payment.getPaymentData());
-        assertEquals("PENDING", payment.getStatus());
+        assertEquals("SUCCESS", payment.getStatus());
     }
 
     @Test
@@ -57,6 +59,7 @@ class PaymentTest {
 
     @Test
     void testCreatePaymentReject(){
+        paymentDataVoucher.clear();
         Payment payment = new Payment("13652556-012a-4c07-b546-54eb1396d34b", order,
                 "VOUCHER_CODE", paymentDataVoucher);
         assertEquals("REJECTED", payment.getStatus());
