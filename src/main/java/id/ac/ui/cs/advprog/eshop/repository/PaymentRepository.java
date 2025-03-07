@@ -4,6 +4,7 @@ import id.ac.ui.cs.advprog.eshop.model.Payment;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Repository
@@ -26,19 +27,13 @@ public class PaymentRepository {
     }
 
     public Payment findById(String id) {
-        for (Payment savedPayment : paymentsData) {
-            if (savedPayment.getId().equals(id)) {
-                return savedPayment;
-            }
-        }
-        return null;
+        return paymentsData.stream()
+                .filter(payment -> payment.getId().equals(id))
+                .findFirst()
+                .orElse(null);
     }
 
     public List<Payment> findAll() {
-        List<Payment> result = new ArrayList<>();
-        for (Payment payment : paymentsData) {
-            result.add(payment);
-        }
-        return result;
+        return Collections.unmodifiableList(paymentsData);
     }
 }
